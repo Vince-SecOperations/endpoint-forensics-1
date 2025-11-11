@@ -7,6 +7,7 @@ The analysis revealed malicious processes, C2 communications, and persistence me
 
 Key Findings & Methodology
 
+
 Task 1. Process Analysis
 
 Used windows.pslist to enumerate running processes
@@ -14,6 +15,7 @@ Used windows.pslist to enumerate running processes
 Identified suspicious process lssass.exe (PID 2748) mimicking legitimate lsass.exe
 
 Discovered child process rundll32.exe (PID 3064) used for DLL execution
+
 
 Task 2. Malware Location
 
@@ -23,6 +25,7 @@ Located malware at: C:\Users\0XSH3R~1\AppData\Local\Temp\925e7e99c5\lssass.exe
 
 Temp folder location indicated deliberate obfuscation and malware behavior
 
+
 Task 3. Network Investigation
 
 Ran windows.netscan and filtered for PID 2748
@@ -30,6 +33,7 @@ Ran windows.netscan and filtered for PID 2748
 Identified C2 server: 41.75.84.12:80 (HTTP)
 
 Two active connections found, suggesting ongoing C2 communication
+
 
 Task 4. Payload Analysis
 
@@ -39,6 +43,7 @@ Extracted strings and searched for HTTP requests: strings pid.2748.dmp | grep "G
 
 Discovered malware downloading additional DLL components
 
+
 Task 5. File System Artifacts
 
 Scanned for malicious files: windows.filescan | grep -E "cred64|clip64"
@@ -46,6 +51,7 @@ Scanned for malicious files: windows.filescan | grep -E "cred64|clip64"
 Located downloaded payloads in AppData Roaming directory
 
 Found modular components: clip64.dll and cred64.dll
+
 
 Task 6. Persistence Mechanisms
 
@@ -55,4 +61,5 @@ Evidence of multiple persistence attempts across system locations
 
 Conclusion
 The analysis successfully identified the Amadey Trojan infection chain, including the malicious process location,
+
 C2 communications, downloaded payloads, and persistence mechanisms using Volatility3 memory forensics.
